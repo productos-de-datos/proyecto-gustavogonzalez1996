@@ -1,10 +1,12 @@
 """
+#
 # Evaluador
 # ---------------------------------------------------------------------------------------
 #
 # test_01: pylint
 # test_02: pytest
 # test_03: doctest
+#
 """
 import os
 import sys
@@ -114,28 +116,31 @@ def test_07():
 
 def test_08():
     """Evalua figura precios diarios"""
+    os.system("make make_daily_prices_plot")
     assert os.path.isfile("data_lake/business/reports/figures/daily_prices.png") is True
 
 
 def test_09():
-    """Evalua figura precios diarios"""
-    assert (
-        os.path.isfile("data_lake/business/reports/figures/monthly_prices.png") is True
-    )
+    """Evalua figura precios mensuales"""
+    os.system("make make_monthly_prices_plot")
+    assert os.path.isfile("data_lake/business/reports/figures/monthly_prices.png") is True
 
 
 def test_10():
     """Evalua la creación de características para modelos"""
-    assert os.path.isfile("data_lake/business/features/precios_diarios.csv") is True
+    os.system("make make_features")
+    assert os.path.isfile("data_lake/business/features/precios-diarios.csv") is True
 
 
 def test_11():
     """Modelo creado"""
-    assert os.path.isfile("modeles/precios-diarios.pkl") is True
+    os.system("make train_daily_model")
+    assert os.path.isfile("src/models/precios-diarios.pkl") is True
 
 
 def test_12():
     """Pronosticos"""
+    os.system("make make_forecasts")
     assert os.path.isfile("data_lake/business/forecasts/precios-diarios.csv") is True
 
 

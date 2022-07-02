@@ -173,7 +173,7 @@
     {
       "name": "Test 18",
       "setup": "pip3 install matplotlib sklearn pandas luigi pytest pylint",
-      "run": "python3 src/data/create_data_lake.py",
+      "run": "rm -rf data_lake, python3 src/data/create_data_lake.py",
       "input": "",
       "output": "",
       "comparison": "included",
@@ -202,7 +202,7 @@
     },
     {
       "name": "Test 21",
-      "setup": "pip3 install matplotlib sklearn pandas luigi pytest pylint",
+      "setup": "pip3 install matplotlib sklearn pandas luigi pytest pylint openpyxl xlrd",
       "run": "python3 src/data/transform_data.py",
       "input": "",
       "output": "",
@@ -233,7 +233,7 @@
     {
       "name": "Test 24",
       "setup": "pip3 install matplotlib sklearn pandas luigi pytest pylint",
-      "run": "python3 src/models/train_daily_data.py",
+      "run": "python3 src/models/train_daily_model.py",
       "input": "",
       "output": "",
       "comparison": "included",
