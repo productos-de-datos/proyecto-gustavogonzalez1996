@@ -1,11 +1,11 @@
-#
+"""
 # Evaluador
 # ---------------------------------------------------------------------------------------
 #
 # test_01: pylint
 # test_02: pytest
 # test_03: doctest
-#
+"""
 import os
 import sys
 
