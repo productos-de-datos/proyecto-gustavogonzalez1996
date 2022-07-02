@@ -2,8 +2,6 @@
 Módulo de entrenamiento del modelo.
 -------------------------------------------------------------------------------
 
-https://jdvelasq.github.io/courses/notebooks/sklearn_supervised_10_neural_networks/1-03_pronostico_series_de_tiempo.html
-
 """
 """Entrena el modelo de pronóstico de precios diarios.
 
