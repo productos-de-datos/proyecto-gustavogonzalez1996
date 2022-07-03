@@ -1,9 +1,6 @@
 """
 Módulo de preparación de datos para pronóstico.
 -------------------------------------------------------------------------------
-
-
-
 """
 
 def make_features():

@@ -1,9 +1,6 @@
 """
 Módulo de computación de precios diarios.
 -------------------------------------------------------------------------------
-
-
-
 """
 
 def compute_daily_prices():

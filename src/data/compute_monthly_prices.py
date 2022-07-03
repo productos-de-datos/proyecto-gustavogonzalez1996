@@ -1,11 +1,7 @@
 """
 Módulo de computación de precios mensuales.
 -------------------------------------------------------------------------------
-
-
 """
-
-
 def compute_monthly_prices():
     """Compute los precios promedios mensuales.
 

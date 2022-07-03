@@ -1,9 +1,6 @@
 """
 Módulo pipeline.
 -------------------------------------------------------------------------------
-En este módulo se llaman todas las funciones creadas y se van ejecutando una 
-después de la otra. Para hacer esto se hace uso de las dependencias y se
-guardan los archivos en la ruta especificada.
 
 Construya un pipeline de Luigi que:
 

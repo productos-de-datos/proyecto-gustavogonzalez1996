@@ -2,13 +2,6 @@
 Módulo de limpieza de datos.
 -------------------------------------------------------------------------------
 
-En este módulo se unen todos los archivos csv que esten en la ruta indicada, se 
-crea una lista de ellos y se unen en un archivo.
-Luego, se convierte el campo fecha a formato fecha, se rellenan los espacios vacíos 
-con el promedio de las filas y se elimnan duplicados.
-Además, con melt se transforman las filas en columnas para obtener las tres columnas 
-requeridas y se guarda el archivo ordenado.
-
     Realice la limpieza y transformación de los archivos CSV.
 
     Usando los archivos data_lake/raw/*.csv, cree el archivo data_lake/cleansed/precios-horarios.csv.
