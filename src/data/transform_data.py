@@ -19,7 +19,7 @@ def transform_data():
 
     for num in range(1995, 2022):
         if num in range(2016, 2018):
-            read_xls = pd.read_excel(f'data_lake/landing/{num}.xls')
+            read_xls = pd.read_excel(f'data_lake/landing/{num}.xls', header=None)
             delete_empty_rows = read_xls.dropna(axis=0, thresh=10)
             delete_header = delete_empty_rows.iloc[1:]
             data = delete_header.iloc[:, 0:25]
