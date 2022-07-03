@@ -76,4 +76,4 @@ if __name__ == "__main__":
 
     doctest.testmod()
 
-train_daily_model()
+#train_daily_model()
