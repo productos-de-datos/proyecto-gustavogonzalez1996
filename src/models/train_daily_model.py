@@ -1,13 +1,15 @@
 """
 Módulo de entrenamiento del modelo.
 -------------------------------------------------------------------------------
-
+En este módulo se selecciona la columna precios que es la que se desea pronósticar,
+se remueve la tendencia, el componente ciclico, se escalan los datos, se construye
+la matriz de regresores y luego se entrena el modelo y se guarda.
+Todo se siguió de:
+https://jdvelasq.github.io/courses/notebooks/sklearn_supervised_10_neural_networks/1-03_pronostico_series_de_tiempo.html
 """
 """Entrena el modelo de pronóstico de precios diarios.
-
     Con las features entrene el modelo de pronóstico de precios diarios y
     salvelo en models/precios-diarios.pkl
-
 """
 
 import pandas as pd
