@@ -47,7 +47,7 @@ def matriz_regresores():
 
 def save_model(model):
 
-    with open("src/models/precios-diarios.pkl", "wb") as file:
+    with open("src/models/precios-diarios.pickle", "wb") as file:
         pkl.dump(model, file, pkl.HIGHEST_PROTOCOL)
 
 def train_daily_model():
