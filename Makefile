@@ -6,8 +6,6 @@
 .PHONY: pipeline
 .PHONY: make_features
 .PHONY: train_model
-.PHONY: make_daily_prices_plot
-.PHONY: make_daily_monthly_plot
 
 create_data_lake:
 	python3 src/data/create_data_lake.py

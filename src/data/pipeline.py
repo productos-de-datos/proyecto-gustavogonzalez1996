@@ -1,7 +1,4 @@
 """
-Módulo pipeline.
--------------------------------------------------------------------------------
-
 Construya un pipeline de Luigi que:
 
 * Importe los datos xls
@@ -12,76 +9,86 @@ Construya un pipeline de Luigi que:
 
 En luigi llame las funciones que ya creo.
 
+
 """
 import luigi
-from luigi import Task, LocalTarget
+from create_data_lake import create_data_lake
+from ingest_data import ingest_data
+from transform_data import transform_data
+from clean_data import clean_data
+from compute_daily_prices import compute_daily_prices
+from compute_monthly_prices import compute_monthly_prices
 
-class Descargar_archivos(Task):
 
+class CreateStructure(luigi.Task):
+    """
+    Crea la estructura
+    """
     def output(self):
-        return LocalTarget('data_lake/landing/archivo.txt')
+        return []
 
     def run(self):
-        from ingest_data import ingest_data
-        with self.output().open("w") as outfile:
-            ingest_data()
+        create_data_lake()
 
-class Transformar_archivos(Task):
-
-    def requires(self):
-        return Descargar_archivos()
-    
+class IngestData(luigi.Task):
+    """
+    Recupera los datos desde un archivo externo
+    """
     def output(self):
-        return LocalTarget('data_lake/raw/archivo.txt')
+        return []
 
     def run(self):
-        from transform_data import transform_data
-        with self.output().open("w") as outfile:
-            transform_data()
+        ingest_data()
 
-class Tabla_U_Precios(Task):
-    
-    def requires(self):
-        return Transformar_archivos()
-    
+class TransformData(luigi.Task):
+    """
+    Transforma los datos y los
+    consolida en un unico archivo
+    """
     def output(self):
-        return LocalTarget('data_lake/cleansed/archivo.txt')
+        return []
 
     def run(self):
-        from clean_data import clean_data
-        with self.output().open("w") as outfile:
-            clean_data()
+        transform_data()
 
-class Precio_P_Diario(Task):
-    
-    def requires(self):
-        return Tabla_U_Precios()
-    
+class CleanData(luigi.Task):
+    """
+    La función limpia y estructura los datos
+    """
     def output(self):
-        return LocalTarget('data_lake/business/archivo.txt')
+        return []
 
     def run(self):
-        from compute_daily_prices import compute_daily_prices
-        with self.output().open("w") as outfile:
-            compute_daily_prices()
+        clean_data()
 
-class Precio_P_Mensual(Task):
-    
-    def requires(self):
-        return Precio_P_Diario()
-    
+class ComputeDailyPrices(luigi.Task):
+    """
+    Computa los precios por dia
+    """
     def output(self):
-        return LocalTarget('data_lake/business/archivo.txt')
+        return []
 
     def run(self):
-        from compute_monthly_prices import compute_monthly_prices
-        with self.output().open("w") as outfile:
-            compute_monthly_prices()
+        compute_daily_prices()
 
+class ComputeMonthlyPrices(luigi.Task):
+    """
+    Computa los precios por mes
+    """
+    def output(self):
+        return []
+
+    def run(self):
+        compute_monthly_prices()
+
+def pipeline():
+    """
+    Orquesta y ejecuta el pipeline
+    """
+    luigi.build([CreateStructure(), IngestData(), TransformData(), CleanData(),
+    ComputeDailyPrices(), ComputeMonthlyPrices() ],  local_scheduler=True)
 
 if __name__ == "__main__":
-    luigi.run(["Precio_P_Mensual", "--local-scheduler"])
-
     import doctest
-
+    pipeline()
     doctest.testmod()

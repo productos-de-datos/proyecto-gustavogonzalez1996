@@ -1,5 +1,3 @@
-"""
-#
 # Evaluador
 # ---------------------------------------------------------------------------------------
 #
@@ -7,10 +5,8 @@
 # test_02: pytest
 # test_03: doctest
 #
-"""
 import os
 import sys
-
 
 def test_01():
     """Califica la creación del data lake"""
@@ -121,21 +117,23 @@ def test_08():
 
 
 def test_09():
-    """Evalua figura precios mensuales"""
+    """Evalua figura precios diarios"""
     os.system("make make_monthly_prices_plot")
-    assert os.path.isfile("data_lake/business/reports/figures/monthly_prices.png") is True
+    assert (
+        os.path.isfile("data_lake/business/reports/figures/monthly_prices.png") is True
+    )
 
 
 def test_10():
     """Evalua la creación de características para modelos"""
     os.system("make make_features")
-    assert os.path.isfile("data_lake/business/features/precios-diarios.csv") is True
+    assert os.path.isfile("data_lake/business/features/precios_diarios.csv") is True
 
 
 def test_11():
     """Modelo creado"""
-    os.system("make train_daily_model")
-    assert os.path.isfile("src/models/precios-diarios.pickle") is True
+    os.system("make train_model")
+    assert os.path.isfile("src/models/precios-diarios.pkl") is True
 
 
 def test_12():
@@ -160,3 +158,4 @@ test = {
 }[sys.argv[1]]
 
 test()
+

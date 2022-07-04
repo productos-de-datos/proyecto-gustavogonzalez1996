@@ -1,31 +1,38 @@
 """
-Módulo de ingestión de datos.
--------------------------------------------------------------------------------
+Módulo de ingestión de datos desde repositorio externo
 """
-import requests as req
+import os
+import urllib.request
 
 def ingest_data():
-    """Ingeste los datos externos a la capa landing del data lake.
+    """
+    Módulo de ingestión de datos.
+    -------------------------------------------------------------------------------
+    Ingeste los datos externos a la capa landing del data lake.
 
     Del repositorio jdvelasq/datalabs/precio_bolsa_nacional/xls/ descarge los
     archivos de precios de bolsa nacional en formato xls a la capa landing. La
     descarga debe realizarse usando únicamente funciones de Python.
 
     """
+    parent_dir = "data_lake"
+    link='https://github.com/jdvelasq/datalabs/blob/master/datasets/precio_bolsa_nacional/xls/'
 
-    for num in range(1995, 2022):
-        if num in range(2016, 2018):
-            url = f'https://github.com/jdvelasq/datalabs/blob/master/datasets/precio_bolsa_nacional/xls/{num}.xls?raw=true'
-            file = req.get(url, allow_redirects=True)
-            open(f'data_lake/landing/{num}.xls', 'wb').write(file.content)
-        else:
-            url = f'https://github.com/jdvelasq/datalabs/blob/master/datasets/precio_bolsa_nacional/xls/{num}.xlsx?raw=true'
-            file = req.get(url, allow_redirects=True)
-            open(f'data_lake/landing/{num}.xlsx', 'wb').write(file.content)
+    if os.path.isdir(parent_dir) and os.path.isdir(parent_dir+"/landing" ):
+        os.chdir(parent_dir + "/landing")
+        for year in range(1995,2022):
+            url=link
+            if year not in (2016, 2017):
+                url= url + str(year)+'.xlsx?raw=true'
+                urllib.request.urlretrieve(url, str(year) + ".xlsx")
+            else :
+                url = url + str(year)+'.xls?raw=true'
+                urllib.request.urlretrieve(url, str(year) + ".xls")
+    else:
+        print("There is not landing directory")
 
-    #raise NotImplementedError("Implementar esta función")
 
 if __name__ == "__main__":
     import doctest
-    doctest.testmod()
     ingest_data()
+    doctest.testmod()

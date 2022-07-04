@@ -22,7 +22,7 @@
     },
     {
       "name": "Test 03",
-      "setup": "pip3 install matplotlib sklearn pandas luigi pytest pylint openpyxl xlrd",
+      "setup": "pip3 install matplotlib sklearn pandas luigi pytest pylint",
       "run": "python3 grader.py 03",
       "input": "",
       "output": "",
@@ -123,7 +123,7 @@
     {
       "name": "Test 13",
       "setup": "pip3 install matplotlib sklearn pandas luigi pytest pylint",
-      "run": "pylint *.py",
+      "run": "pylint src/*/*.py",
       "input": "",
       "output": "",
       "comparison": "included",
@@ -133,7 +133,7 @@
     {
       "name": "Test 14",
       "setup": "pip3 install matplotlib sklearn pandas luigi pytest pylint",
-      "run": "pytest src/data/create_data_lake.py",
+      "run": "python3 -m doctest -v src/data/compute_daily_prices.py",
       "input": "",
       "output": "",
       "comparison": "included",
@@ -173,7 +173,7 @@
     {
       "name": "Test 18",
       "setup": "pip3 install matplotlib sklearn pandas luigi pytest pylint",
-      "run": "rm -rf data_lake, python3 src/data/create_data_lake.py",
+      "run": "python3 src/data/create_data_lake.py",
       "input": "",
       "output": "",
       "comparison": "included",
@@ -202,7 +202,7 @@
     },
     {
       "name": "Test 21",
-      "setup": "pip3 install matplotlib sklearn pandas luigi pytest pylint openpyxl xlrd",
+      "setup": "pip3 install matplotlib sklearn pandas luigi pytest pylint",
       "run": "python3 src/data/transform_data.py",
       "input": "",
       "output": "",

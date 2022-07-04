@@ -1,36 +1,23 @@
 """
-Módulo de creación del gráfico de precios mensuales.
--------------------------------------------------------------------------------
-
-
+Crea grafico de lineas que representa los precios promedios por mes.
 """
-
+import pandas as pd
+import matplotlib.pyplot as plt
 def make_monthly_prices_plot():
-    """Crea un grafico de lines que representa los precios promedios mensuales.
 
-    Usando el archivo data_lake/business/precios-mensuales.csv, crea un grafico de
-    lines que representa los precios promedios mensuales.
+    """Crea un grafico de lines que representa los precios promedios diarios.
 
-    El archivo se debe salvar en formato PNG en data_lake/business/reports/figures/monthly_prices.png.
+    Usando el archivo data_lake/business/precios-diarios.csv, crea un grafico de
+    lines que representa los precios promedios diarios.
+
+    El archivo se debe salvar en formato PNG en data_lake/business/reports/figures/daily_prices.png.
 
     """
-    import pandas as pd
-    import matplotlib.pyplot as plt
-
-    df = pd.read_csv('data_lake/business/precios-mensuales.csv', index_col=0, parse_dates=True)
-    plt.figure(figsize=(14, 5))
-    plt.plot(df)
-    plt.xlabel('Fecha')
-    plt.ylabel('Precio promedio mensual')
-    plt.savefig('data_lake/business/reports/figures/monthly_prices.png')
-
-
-    #raise NotImplementedError("Implementar esta función")
-
+    df_monthly_prices = pd.read_csv("./data_lake/business/precios-mensuales.csv")
+    plt.plot(df_monthly_prices["fecha"], df_monthly_prices["precio"])
+    plt.savefig('./data_lake/business/reports/figures/monthly_prices.png')
 
 if __name__ == "__main__":
     import doctest
-
+    make_monthly_prices_plot()
     doctest.testmod()
-
-make_monthly_prices_plot()

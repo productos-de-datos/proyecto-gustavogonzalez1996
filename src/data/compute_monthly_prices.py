@@ -1,7 +1,6 @@
+""" Crea un achivo con los precios promedios consolidados por mes y año.
 """
-Módulo de computación de precios mensuales.
--------------------------------------------------------------------------------
-"""
+import pandas as pd
 def compute_monthly_prices():
     """Compute los precios promedios mensuales.
 
@@ -14,24 +13,23 @@ def compute_monthly_prices():
     * precio: precio promedio mensual de la electricidad en la bolsa nacional
 
     """
-    
-    import pandas as pd
-  
-    df = pd.read_csv('data_lake/cleansed/precios-horarios.csv')
-    df['fecha'] = pd.to_datetime(df['fecha'], format="%Y/%m/%d")
-    df = df.set_index('fecha')
+    route_try = True
+    try:
+        datos= pd.read_csv("./data_lake/cleansed/precios-horarios.csv")
+    except FileNotFoundError:
+        route_try = False
+        datos= pd.read_csv("../../data_lake/cleansed/precios-horarios.csv")
+    datos["year-month"] = datos["fecha"].map(lambda x: str(x)[0:7])
 
-    df = df.resample('M').mean()
-    df = df.reset_index()
-    df = df.iloc[:, [0, 2]]
-
-    df.to_csv('data_lake/business/precios-mensuales.csv', encoding='utf-8', index=False)
-  
-    #raise NotImplementedError("Implementar esta función")
+    datos = datos.groupby('year-month', as_index=False).mean()
+    datos = datos[['year-month','precio']]
+    datos = datos.rename(columns= {'year-month': 'fecha'})
+    datos["fecha"] =  datos["fecha"].map(lambda x: x + str("-01"))
+    route = ("./data_lake/business/precios-mensuales.csv" if route_try
+            else "../../data_lake/business/precios-mensuales.csv")
+    datos.to_csv(route, index=False)
 
 if __name__ == "__main__":
     import doctest
-
+    compute_monthly_prices()
     doctest.testmod()
-
-compute_monthly_prices()

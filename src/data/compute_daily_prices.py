@@ -1,8 +1,6 @@
+""" Crea un achivo con los precios promedios consolidados por dia.
 """
-Módulo de computación de precios diarios.
--------------------------------------------------------------------------------
-"""
-
+import pandas as pd
 def compute_daily_prices():
     """Compute los precios promedios diarios.
 
@@ -15,24 +13,19 @@ def compute_daily_prices():
     * precio: precio promedio diario de la electricidad en la bolsa nacional
 
     """
-    import pandas as pd
-
-    df = pd.read_csv('data_lake/cleansed/precios-horarios.csv')
-    df['fecha'] = pd.to_datetime(df['fecha'], format="%Y/%m/%d")
-    df = df.set_index('fecha')
-
-    df = df.resample('D').mean()
-    df = df.reset_index()
-    df = df.iloc[:, [0, 2]]
-
-    df.to_csv('data_lake/business/precios-diarios.csv', encoding='utf-8', index=False)
-
-    # raise NotImplementedError("Implementar esta función")
-
+    route_try = True
+    try:
+        datos = pd.read_csv("./data_lake/cleansed/precios-horarios.csv")
+    except FileNotFoundError:
+        route_try = False
+        datos= pd.read_csv("../../data_lake/cleansed/precios-horarios.csv")
+    datos= datos.groupby('fecha', as_index=False).mean()
+    datos= datos[['fecha','precio']]
+    route = ("./data_lake/business/precios-diarios.csv" if route_try
+            else "../../data_lake/business/precios-diarios.csv")
+    datos.to_csv(route, index=False)
 
 if __name__ == "__main__":
     import doctest
-
+    compute_daily_prices()
     doctest.testmod()
-
-compute_daily_prices()
