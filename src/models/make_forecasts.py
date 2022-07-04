@@ -26,13 +26,13 @@ def make_forecasts():
     from train_daily_model import comp_ciclica_removida
     from sklearn.preprocessing import MinMaxScaler
     import pandas as pd
-    import pickle as pkl
+    import pickle
     import numpy as np
 
     def load_model():
 
-        with open("src/models/precios-diarios.pkl", "rb") as file:
-            model = pkl.load(file)
+        with open("src/models/precios-diarios.pickle", "rb") as file:
+            model = pickle.load(file)
 
         return model
 
