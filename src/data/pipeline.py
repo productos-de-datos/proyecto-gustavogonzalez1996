@@ -1,4 +1,10 @@
 """
+Descripción
+
+Construcción del pipeline de luifi para importar, tranformar, crear la tabla de precios horarios
+y calcular los precios promedios diarios y mensuales.
+"""
+"""
 Construya un pipeline de Luigi que:
 
 * Importe los datos xls
@@ -9,8 +15,8 @@ Construya un pipeline de Luigi que:
 
 En luigi llame las funciones que ya creo.
 
-
 """
+
 import luigi
 from create_data_lake import create_data_lake
 from ingest_data import ingest_data

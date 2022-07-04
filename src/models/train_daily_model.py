@@ -1,4 +1,6 @@
 """
+Descripción
+
 Entrena el modelo con las caracteristicas creadas
 """
 import os

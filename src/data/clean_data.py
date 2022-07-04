@@ -1,4 +1,6 @@
-""" Limpia y transforma los archivos para consolidarlos y finalmente procesarlos
+""" 
+Descripción
+Realiza la limpieza completa de los archivos para en pasos siguientes hacer una consolidación de estos.
 """
 import pandas as pd
 def clean_data():

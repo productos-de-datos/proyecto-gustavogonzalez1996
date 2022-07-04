@@ -1,4 +1,7 @@
 """
+
+Descripción
+
 Crea grafico de lineas que representa los precios promedios por mes.
 """
 import pandas as pd

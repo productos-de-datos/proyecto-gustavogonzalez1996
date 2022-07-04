@@ -1,4 +1,6 @@
 """
+Descripción
+
 Crea grafico de lineas que representa los precios promedios diarios.
 """
 import pandas as pd

@@ -1,4 +1,6 @@
 """
+Descripción
+
 Crea nuevas caracteristicas para predecir el precio diario de electricidad.
 Las caracteristicas agregadas son: dia, mes, ano, tipo_dia, festivo, fin_semana
 """

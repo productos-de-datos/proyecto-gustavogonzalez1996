@@ -1,4 +1,6 @@
 """
+Descripción
+
 Módulo de transformación de datos en columnas necesarias para analisis
 Debe ser ejecutado ya sea desde el directorio actual o desde la raiz del proyecto
 """
