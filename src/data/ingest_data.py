@@ -1,7 +1,5 @@
 """
-Descripción
-
-Ingesta de datos externos a la capa landing del data lake con los archivos de precios de bolsa nacional.
+Módulo de ingestión de datos desde repositorio externo
 """
 import os
 import urllib.request

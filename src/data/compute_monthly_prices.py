@@ -1,6 +1,4 @@
-""" 
-Descripción
-Consolidación de precios promedios consolidados por mes y por año.
+""" Crea un achivo con los precios promedios consolidados por mes y año.
 """
 import pandas as pd
 def compute_monthly_prices():

@@ -1,7 +1,5 @@
 """
-Descripción
-
-Creación de las carpetas raíz del proyecto con sus respectivas subcarpetas.
+Este modulo crea la estructura necesaria para el proyecto.
 """
 import os
 def create_data_lake():
