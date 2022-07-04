@@ -1,3 +1,10 @@
+"""
+Descripción
+
+Crea nuevas caracteristicas para predecir el precio diario de electricidad.
+Las caracteristicas agregadas son: dia, mes, ano, tipo_dia, festivo, fin_semana
+"""
+import pandas as pd
 def make_features():
     """Prepara datos para pronóstico.
 
@@ -12,10 +19,18 @@ def make_features():
     analizar y determinar las variables explicativas del modelo.
 
     """
-    raise NotImplementedError("Implementar esta función")
+    datos = pd.read_csv("./data_lake/business/precios-diarios.csv")
+    datos["fecha"] = pd.to_datetime(datos["fecha"])
+    datos["anio"] = datos["fecha"].dt.year
+    datos["mes"] = datos["fecha"].dt.month
+    datos["dia_mes"] = datos["fecha"].dt.day
+    datos["tipo_dia"] = datos["fecha"].dt.weekday
+    datos["fin_semana"] = (datos["tipo_dia"]>=5).astype(int)
+
+    datos.to_csv("./data_lake/business/features/precios_diarios.csv", index=False)
 
 
 if __name__ == "__main__":
     import doctest
-
+    make_features()
     doctest.testmod()
