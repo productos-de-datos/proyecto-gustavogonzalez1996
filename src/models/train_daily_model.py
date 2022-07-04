@@ -1,45 +1,79 @@
-def train_daily_model():
-    """Entrena el modelo de pronóstico de precios diarios.
-    Con las features entrene el modelo de proóstico de precios diarios y
+"""
+Módulo de entrenamiento del modelo.
+-------------------------------------------------------------------------------
+"""
+"""Entrena el modelo de pronóstico de precios diarios.
+    Con las features entrene el modelo de pronóstico de precios diarios y
     salvelo en models/precios-diarios.pkl
-    """
-    # Importe pandas
-    # Importe pickle
-    # Importe numpy
-    # Importe LinearRegression
-    # Importe train_test_split
-    # Importe mean_squared_error
-    import pandas as pd
-    import pickle
-    import numpy as np
-    from sklearn.linear_model import LinearRegression
-    from sklearn.model_selection import train_test_split
-    from sklearn.metrics import mean_squared_error
-    from sklearn.ensemble import RandomForestRegressor
+"""
 
-    # Lea el archivo `precios-diarios` y asignelo al DataFrame `df`
-    df = pd.read_csv("data_lake/business/features/precios-diarios.csv", encoding = 'utf-8', sep=',')
+import pandas as pd
+import numpy as np
+from sklearn.preprocessing import MinMaxScaler
+from sklearn.neural_network import MLPRegressor
+import pickle
 
-    # Asigne a la variable los valores de la columna `fecha`
-    df["fecha"] = pd.to_datetime(df["fecha"]).dt.strftime('%Y%m%d')
-    X_fecha = np.array(df['fecha']).reshape(-1,1)
-
-    # Asigne a la variable los valores de la columna `precio`
-    y_precio = np.array(df['precio']).reshape(-1,1)
-
-    # Divida los datos de entrenamiento y prueba. La semilla del generador de números
-    # aleatorios es 123456. El tamaño de la muestra de entrenamiento es del 80%
-    (X_train, X_test, y_train, y_test,) = train_test_split(X_fecha, y_precio, test_size=0.2, random_state=123456,)
-
-    # Cree una instancia del modelo de regresión lineal
-    clf = RandomForestRegressor(n_estimators=100, max_features='sqrt', n_jobs=-1, oob_score = True, random_state = 123456)
+def load_data():
+    df = pd.read_csv('data_lake/business/features/precios-diarios.csv')
+    data = df["precio"]
+    return data
     
-    # Entrene el clasificador usando X_train y y_train
-    clf.fit(X_train,y_train)
+            # Se remueve la tendencia
+def tendencia_removida():
+    data = load_data()
+    data_d1 = [data[t] - data[t - 1] for t in range(1, len(data))]
+    return data_d1
 
-    pickle.dump(clf, open('src/models/precios-diarios.pickle', 'wb'))
+def comp_ciclica_removida():
+    data_d1 = tendencia_removida()
+    data_d1d12 = [data_d1[t] - data_d1[t - 12] for t in range(12, len(data_d1))]
+    return data_d1d12
+
+def valores_escalados():
+    data_d1d12 = comp_ciclica_removida()
+    scaler = MinMaxScaler()
+    data_d1d12_scaled = scaler.fit_transform(np.array(data_d1d12).reshape(-1, 1))
+    data_d1d12_scaled = [u[0] for u in data_d1d12_scaled] # el largo de los datos escalados es 9404
+    return data_d1d12_scaled
+    
+def matriz_regresores():
+    data_d1d12_scaled = valores_escalados()
+    P = 13
+    X = []
+    for t in range(P - 1, len(data_d1d12_scaled) - 1):
+        X.append([data_d1d12_scaled[t - n] for n in range(P)])
+    d = data_d1d12_scaled[P:] # el largo de X y d es 9391
+    return X
+
+def save_model(model):
+
+    with open("src/models/precios-diarios.pickle", "wb") as file:
+        pkl.dump(model, file, pkl.HIGHEST_PROTOCOL)
+
+def train_daily_model():
+    X = matriz_regresores()
+    data_d1d12_scaled = valores_escalados()
+    H = 4  # Se escoge arbitrariamente
+    np.random.seed(123456)
+    mlp = MLPRegressor(
+        hidden_layer_sizes=(H,),
+        activation="logistic",
+        learning_rate="adaptive",
+        momentum=0.0,
+        learning_rate_init=0.002,
+        max_iter=100000,
+    )
+    model = mlp.fit(X[0:8441], data_d1d12_scaled[0:8441]) # 9391 - 950 = 8441. 9391 es el largo de X 
+                                                          #  y 950 es aproximadamente el 10% de los datos
+    save_model(model)
+train_daily_model()
+    
+    #raise NotImplementedError("Implementar esta función")
+
 
 if __name__ == "__main__":
     import doctest
-    train_daily_model()
+
     doctest.testmod()
+
+#train_daily_model()
